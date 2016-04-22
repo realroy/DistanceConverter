@@ -7,25 +7,24 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
+@SuppressWarnings("serial")
 public class DistanceConverter extends JFrame {
 
 	private JPanel mainPane;
-	private JTextField input1;
-	private JComboBox combobox1;
 	private UnitConverter uc;
 	private JLabel equalLabel;
-	private JTextField resultField;
-	private JTextField inputField;
-	private JComboBox<Object> unitCombobox1;
-	private JComboBox<Object> unitCombobox2;
-	private JButton convertBtn;
+	private JTextField rightTextField;
+	private JTextField leftTextField;
+	private JComboBox<Object> leftComboBox;
+	private JComboBox<Object> rightComboBox;
 	private JButton clearBtn;
-	private JTextField textField;
 
-	/**
-	 * Launch the application.
-	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -39,41 +38,110 @@ public class DistanceConverter extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public DistanceConverter() {
+		setTitle("Distance Converter");
+		uc = new UnitConverter();
 		initComponent();
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void initComponent(){
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 668, 80);
+		setBounds(100, 100, 671, 80);
 		mainPane = new JPanel();
 		setContentPane(mainPane);
 		
-		new UnitConverter();
-		
-		inputField 		= new JTextField();
-		inputField.setColumns(10);
-		unitCombobox1	= new JComboBox<Object>(Length.values());
+		leftTextField 	= new JTextField();
+		leftTextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				typeValue(Choice.LEFT);
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+				typeValue(Choice.LEFT);
+			}
+		});
+		leftTextField.setColumns(10);
+		leftComboBox	= new JComboBox<Object> (Length.values());
 		equalLabel 		= new JLabel("=");
-		resultField 	= new JTextField();
-		resultField.setColumns(10);
-		unitCombobox2	= new JComboBox<Object>(Length.values());
-		convertBtn		= new JButton("Convert!");
+		rightTextField 	= new JTextField();
+		rightTextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				typeValue(Choice.RIGHT);
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+				typeValue(Choice.RIGHT);
+			}
+		});
+		rightTextField.setColumns(10);
+		rightComboBox	= new JComboBox<Object> (Length.values());
 		clearBtn		= new JButton("Clear");
+		clearBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				leftTextField.setText("");
+				rightTextField.setText("");
+			}
+		});
 		mainPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		mainPane.add(inputField);
-		mainPane.add(unitCombobox1);
+		mainPane.add(leftTextField);
+		mainPane.add(leftComboBox);
 		mainPane.add(equalLabel);
-		mainPane.add(resultField);
-		mainPane.add(unitCombobox2);
-		mainPane.add(convertBtn);
+		mainPane.add(rightTextField);
+		mainPane.add(rightComboBox);
 		mainPane.add(clearBtn);
 		
 	}
+	
+	public void typeValue(Choice c) {
+		if(c.getSide() == "left"){
+			try{
+				double amount = Double.parseDouble(leftTextField.getText());
+				if(amount > 0) {
+					Length fromUnit = (Length) leftComboBox.getSelectedItem();
+					Length toUnit = (Length) rightComboBox.getSelectedItem();
+					String result = String.valueOf(uc.convert(amount, fromUnit, toUnit));
+					rightTextField.setText(result);
+				}
+				else {
+					rightTextField.setText("");
+				}
+			} catch(Exception error){}
+		}
+		else if(c.getSide() == "right") {
+			try{
+				double amount = Double.parseDouble(rightTextField.getText());
+				if(amount > 0) {
+					Length fromUnit = (Length) rightComboBox.getSelectedItem();
+					Length toUnit = (Length) leftComboBox.getSelectedItem();
+					String result = String.valueOf(uc.convert(amount, fromUnit, toUnit));
+					rightTextField.setText(result);
+				}
+				else {
+					leftTextField.setText("");
+				}
+			} catch(Exception error){}
+		}
+		else {/*Do nothing*/}
+	}
+	
 
 }
+enum Choice{
+	LEFT("left"), RIGHT("right");
+	
+	private String side;
+	
+	private Choice(String side) {
+		this.side = side;
+	}
+	
+	public String getSide() {
+		return this.side;
+	}
+	
+}
+
