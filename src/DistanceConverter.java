@@ -98,7 +98,7 @@ public class DistanceConverter extends JFrame {
 	
 	public void typeValue(Choice c) {
 		if(c.getSide() == "left"){
-			try{
+			try {
 				double amount = Double.parseDouble(leftTextField.getText());
 				if(amount > 0) {
 					Length fromUnit = (Length) leftComboBox.getSelectedItem();
@@ -109,21 +109,24 @@ public class DistanceConverter extends JFrame {
 				else {
 					rightTextField.setText("");
 				}
-			} catch(Exception error){}
+			} catch(NumberFormatException e){/*Do nothing*/}
 		}
 		else if(c.getSide() == "right") {
-			try{
+			try {
+				if(rightTextField.getText() == "") {
+					leftTextField.setText("");
+				}
 				double amount = Double.parseDouble(rightTextField.getText());
 				if(amount > 0) {
 					Length fromUnit = (Length) rightComboBox.getSelectedItem();
 					Length toUnit = (Length) leftComboBox.getSelectedItem();
 					String result = String.valueOf(uc.convert(amount, fromUnit, toUnit));
-					rightTextField.setText(result);
+					leftTextField.setText(result);
 				}
 				else {
 					leftTextField.setText("");
 				}
-			} catch(Exception error){}
+			} catch(NumberFormatException e){/*Do nothing*/}
 		}
 		else {/*Do nothing*/}
 	}
