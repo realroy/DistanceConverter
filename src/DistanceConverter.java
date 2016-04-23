@@ -14,6 +14,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class DistanceConverter extends JFrame {
@@ -25,7 +27,6 @@ public class DistanceConverter extends JFrame {
 	private JTextField 			leftTextField;
 	private JComboBox<Object> 	leftComboBox;
 	private JComboBox<Object> 	rightComboBox;
-	private JButton 			clearBtn;
 
 
 	public static void main(String[] args) {
@@ -62,6 +63,11 @@ public class DistanceConverter extends JFrame {
 		});
 		leftTextField.setColumns(10);
 		leftComboBox	= new JComboBox<Object> (Length.values());
+		leftComboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				typeValue(Choice.LEFT);
+			}
+		});
 		equalLabel 		= new JLabel("=");
 		rightTextField 	= new JTextField();
 		rightTextField.addKeyListener(new KeyAdapter() {
@@ -76,12 +82,9 @@ public class DistanceConverter extends JFrame {
 		});
 		rightTextField.setColumns(10);
 		rightComboBox	= new JComboBox<Object> (Length.values());
-		clearBtn		= new JButton("Clear");
-		clearBtn.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				leftTextField.setText("");
-				rightTextField.setText("");
+		rightComboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				typeValue(Choice.RIGHT);
 			}
 		});
 		
@@ -94,7 +97,6 @@ public class DistanceConverter extends JFrame {
 		mainPane.add(equalLabel);
 		mainPane.add(rightTextField);
 		mainPane.add(rightComboBox);
-		mainPane.add(clearBtn);
 		
 	}
 	
