@@ -12,7 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-@SuppressWarnings("serial")
+
 public class DistanceConverter extends JFrame {
 
 	private JPanel mainPane;
@@ -107,9 +107,10 @@ public class DistanceConverter extends JFrame {
 					rightTextField.setText(result);
 				}
 				else {
+					System.out.println("A");
 					rightTextField.setText("");
 				}
-			} catch(NumberFormatException e){/*Do nothing*/}
+			} catch(NumberFormatException e){}
 		}
 		else if(c.getSide() == "right") {
 			try {
@@ -126,25 +127,12 @@ public class DistanceConverter extends JFrame {
 				else {
 					leftTextField.setText("");
 				}
-			} catch(NumberFormatException e){/*Do nothing*/}
+			} catch(NumberFormatException e){}
 		}
-		else {/*Do nothing*/}
+		else {}
 	}
 	
 
 }
-enum Choice{
-	LEFT("left"), RIGHT("right");
-	
-	private String side;
-	
-	private Choice(String side) {
-		this.side = side;
-	}
-	
-	public String getSide() {
-		return this.side;
-	}
-	
-}
+
 
