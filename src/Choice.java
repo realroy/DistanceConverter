@@ -1,3 +1,6 @@
+/*@author roiboon chaiyachit
+ * */
+
 public enum Choice{
 	LEFT("left"), RIGHT("right");
 	

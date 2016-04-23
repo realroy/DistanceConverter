@@ -1,3 +1,6 @@
+/*@author roiboon chaiyachit
+ * */
+
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 
@@ -15,14 +18,14 @@ import java.awt.event.KeyEvent;
 
 public class DistanceConverter extends JFrame {
 
-	private JPanel mainPane;
-	private UnitConverter uc;
-	private JLabel equalLabel;
-	private JTextField rightTextField;
-	private JTextField leftTextField;
-	private JComboBox<Object> leftComboBox;
-	private JComboBox<Object> rightComboBox;
-	private JButton clearBtn;
+	private JPanel 				mainPane;
+	private UnitConverter 		uc;
+	private JLabel 				equalLabel;
+	private JTextField 			rightTextField;
+	private JTextField 			leftTextField;
+	private JComboBox<Object> 	leftComboBox;
+	private JComboBox<Object> 	rightComboBox;
+	private JButton 			clearBtn;
 
 
 	public static void main(String[] args) {
@@ -45,11 +48,7 @@ public class DistanceConverter extends JFrame {
 	}
 	
 	public void initComponent(){
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 671, 80);
-		mainPane = new JPanel();
-		setContentPane(mainPane);
-		
+		mainPane 		= new JPanel();
 		leftTextField 	= new JTextField();
 		leftTextField.addKeyListener(new KeyAdapter() {
 			@Override
@@ -85,8 +84,11 @@ public class DistanceConverter extends JFrame {
 				rightTextField.setText("");
 			}
 		});
-		mainPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 671, 80);
+		setContentPane(mainPane);
+		mainPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		mainPane.add(leftTextField);
 		mainPane.add(leftComboBox);
 		mainPane.add(equalLabel);
@@ -103,14 +105,15 @@ public class DistanceConverter extends JFrame {
 				if(amount > 0) {
 					Length fromUnit = (Length) leftComboBox.getSelectedItem();
 					Length toUnit = (Length) rightComboBox.getSelectedItem();
-					String result = String.valueOf(uc.convert(amount, fromUnit, toUnit));
+					String result = String.valueOf(String.format("%.6f", uc.convert(amount, fromUnit, toUnit)));
 					rightTextField.setText(result);
 				}
 				else {
-					System.out.println("A");
 					rightTextField.setText("");
 				}
-			} catch(NumberFormatException e){}
+			} catch(NumberFormatException e){
+					rightTextField.setText("");
+			}
 		}
 		else if(c.getSide() == "right") {
 			try {
@@ -121,15 +124,16 @@ public class DistanceConverter extends JFrame {
 				if(amount > 0) {
 					Length fromUnit = (Length) rightComboBox.getSelectedItem();
 					Length toUnit = (Length) leftComboBox.getSelectedItem();
-					String result = String.valueOf(uc.convert(amount, fromUnit, toUnit));
+					String result = String.valueOf(String.format("%.6f", uc.convert(amount, fromUnit, toUnit)));
 					leftTextField.setText(result);
 				}
 				else {
 					leftTextField.setText("");
 				}
-			} catch(NumberFormatException e){}
+			} catch(NumberFormatException e){
+				leftTextField.setText("");
+			}
 		}
-		else {}
 	}
 	
 

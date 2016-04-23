@@ -1,8 +1,16 @@
+/*@author roiboon chaiyachit
+ * */
 public class UnitConverter {
+	/* @param amount 	a magnitude of length
+	 * @param fromUnit 	original unit
+	 * @param toUnit 	another unit				  
+	 * @return 			Covert the length unit to another unit*/
 	public double convert(double amount, Length fromUnit, Length toUnit) {
 		return (amount * fromUnit.getValue()) / toUnit.getValue();
 	}
 	
+	/*@return			unit value in meter
+	 * */
 	public Length[] getLength() {
 		return Length.values();
 	}
