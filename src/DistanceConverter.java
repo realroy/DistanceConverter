@@ -1,4 +1,4 @@
-/*@author roiboon chaiyachit
+/*@author roiboon chaiyachit 5810546005
  * */
 
 import java.awt.EventQueue;
@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
+@SuppressWarnings("serial")
 public class DistanceConverter extends JFrame {
 
 	private JPanel 				mainPane;
@@ -101,7 +102,7 @@ public class DistanceConverter extends JFrame {
 	}
 	
 	public void typeValue(Choice c) {
-		if(c.getSide() == "left"){
+		if(c.getSide().equals(Choice.LEFT)){
 			try {
 				double amount = Double.parseDouble(leftTextField.getText());
 				if(amount > 0) {
@@ -117,7 +118,7 @@ public class DistanceConverter extends JFrame {
 					rightTextField.setText("");
 			}
 		}
-		else if(c.getSide() == "right") {
+		else if(c.getSide().equals(Choice.RIGHT)) {
 			try {
 				if(rightTextField.getText() == "") {
 					leftTextField.setText("");
