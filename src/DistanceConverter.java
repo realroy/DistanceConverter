@@ -1,4 +1,4 @@
-/*@author roiboon chaiyachit 5810546005
+/*@author roiboon chaiyachit
  * */
 
 import java.awt.EventQueue;
@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
@@ -18,7 +19,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
-@SuppressWarnings("serial")
 public class DistanceConverter extends JFrame {
 
 	private JPanel 				mainPane;
@@ -102,7 +102,7 @@ public class DistanceConverter extends JFrame {
 	}
 	
 	public void typeValue(Choice c) {
-		if(c.getSide().equals(Choice.LEFT)){
+		if(c.equals(Choice.LEFT)){
 			try {
 				double amount = Double.parseDouble(leftTextField.getText());
 				if(amount > 0) {
@@ -118,11 +118,8 @@ public class DistanceConverter extends JFrame {
 					rightTextField.setText("");
 			}
 		}
-		else if(c.getSide().equals(Choice.RIGHT)) {
+		else if(c.equals(Choice.RIGHT)) {
 			try {
-				if(rightTextField.getText() == "") {
-					leftTextField.setText("");
-				}
 				double amount = Double.parseDouble(rightTextField.getText());
 				if(amount > 0) {
 					Length fromUnit = (Length) rightComboBox.getSelectedItem();
@@ -141,5 +138,3 @@ public class DistanceConverter extends JFrame {
 	
 
 }
-
-
