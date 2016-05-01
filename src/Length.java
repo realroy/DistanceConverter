@@ -1,5 +1,6 @@
-/*@author roiboon chaiyachit
- * */
+/**
+ @author Roiboon Chaiyachit
+**/
 public enum Length {
 	
 	METER("Meter", 1.00),
@@ -14,19 +15,32 @@ public enum Length {
 	private String name;
 	private double value;
 	
+	/**Initial value of Lenght
+	 * @param name of unit
+	 * @param value(in meter) of unit
+	 * */
 	private Length(String name, double value) {
 		this.name = name;
 		this.value = value;
 	}
 
+	/**get the unit's name
+	*@return name of unit
+	*/
 	public String getName() {
 		return this.name;
 	}
 
+	/**get the unit's value
+	*@return value of unit in meter
+	*/
 	public double getValue() {
 		return this.value;
 	}
 	
+	/**
+	* @see java.lang.Object#toString()
+	*/
 	public String toString() {
 		return this.name;
 	}

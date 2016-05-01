@@ -1,54 +1,43 @@
-/*@author roiboon chaiyachit
- * */
+/**
+ * @author Roiboon Chaiyachit
+ */
 
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
-
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
+@SuppressWarnings("serial")
 public class DistanceConverter extends JFrame {
-
+	
 	private JPanel 				mainPane;
-	private UnitConverter 		uc;
+	private UnitConverter 		unitConverter;
 	private JLabel 				equalLabel;
 	private JTextField 			rightTextField;
 	private JTextField 			leftTextField;
 	private JComboBox<Object> 	leftComboBox;
 	private JComboBox<Object> 	rightComboBox;
 
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					DistanceConverter frame = new DistanceConverter();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	/*
+	 Initial Distance Converter value and unit converter
+	 * */
 	public DistanceConverter() {
 		setTitle("Distance Converter");
-		uc = new UnitConverter();
+		unitConverter = new UnitConverter();
 		initComponent();
 	}
 	
+	/**
+	 Initial value all of the component
+	 */
 	public void initComponent(){
 		mainPane 		= new JPanel();
 		leftTextField 	= new JTextField();
@@ -101,14 +90,20 @@ public class DistanceConverter extends JFrame {
 		
 	}
 	
-	public void typeValue(Choice c) {
-		if(c.equals(Choice.LEFT)){
+	/**
+	 * @param choice is a enum that contained user's deicsion to type the input on the left or on the right texfield
+	 * this program will convert unit automatically depend on user choice.
+	 * So when user's input is not a number or user remove thier input, Program will set the both side of textfield to be empty 
+	 * */
+	
+	public void typeValue(Choice choice) {
+		if(choice.equals(Choice.LEFT)){
 			try {
 				double amount = Double.parseDouble(leftTextField.getText());
 				if(amount > 0) {
 					Length fromUnit = (Length) leftComboBox.getSelectedItem();
 					Length toUnit = (Length) rightComboBox.getSelectedItem();
-					String result = String.valueOf(String.format("%.6f", uc.convert(amount, fromUnit, toUnit)));
+					String result = String.valueOf(String.format("%.6f", unitConverter.convert(amount, fromUnit, toUnit)));
 					rightTextField.setText(result);
 				}
 				else {
@@ -118,13 +113,13 @@ public class DistanceConverter extends JFrame {
 					rightTextField.setText("");
 			}
 		}
-		else if(c.equals(Choice.RIGHT)) {
+		else if(choice.equals(Choice.RIGHT)) {
 			try {
 				double amount = Double.parseDouble(rightTextField.getText());
 				if(amount > 0) {
 					Length fromUnit = (Length) rightComboBox.getSelectedItem();
 					Length toUnit = (Length) leftComboBox.getSelectedItem();
-					String result = String.valueOf(String.format("%.6f", uc.convert(amount, fromUnit, toUnit)));
+					String result = String.valueOf(String.format("%.6f", unitConverter.convert(amount, fromUnit, toUnit)));
 					leftTextField.setText(result);
 				}
 				else {
@@ -134,6 +129,22 @@ public class DistanceConverter extends JFrame {
 				leftTextField.setText("");
 			}
 		}
+	}
+	
+	/**Run application
+	 * @param args not use*/
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					DistanceConverter frame = new DistanceConverter();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
 
