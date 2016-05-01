@@ -127,25 +127,10 @@ public class DistanceConverter extends JFrame {
 					leftTextField.setText("");
 				}
 			} catch(NumberFormatException e){
+				System.out.println("Please input value in number format");
 				leftTextField.setText("");
 			}
 		}
-	}
-	
-	/**Run application
-	 * @param args not use*/
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					DistanceConverter frame = new DistanceConverter();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 	}
 	
 
